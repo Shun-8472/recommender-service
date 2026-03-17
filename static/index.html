@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Pulse</title>
+    <meta
+      name="description"
+      content="Search a movie title and get visually rich recommendations."
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="ambient ambient-left"></div>
+      <div class="ambient ambient-right"></div>
+
+      <header class="hero">
+        <p class="eyebrow">Cinema Signal</p>
+        <h1>Find your next movie through a recommendation engine that feels alive.</h1>
+        <p class="hero-copy">
+          Type a title, launch the search, and browse a ranked lineup shaped by text similarity
+          and popularity.
+        </p>
+
+        <form id="search-form" class="search-panel">
+          <label class="search-label" for="title-input">Movie title</label>
+          <div class="search-row">
+            <input
+              id="title-input"
+              name="title"
+              type="text"
+              placeholder="Try Toy Story, Interstellar, The Matrix..."
+              autocomplete="off"
+              required
+            />
+            <button id="submit-button" type="submit">Launch Search</button>
+          </div>
+
+          <div class="control-row">
+            <label class="control-group" for="top-k-input">
+              <span>Results</span>
+              <input id="top-k-input" name="top_k" type="range" min="3" max="12" value="8" />
+              <strong id="top-k-value">8</strong>
+            </label>
+          </div>
+        </form>
+
+        <div class="quick-picks" aria-label="Suggested searches">
+          <button class="pill" type="button" data-title="Toy Story">Toy Story</button>
+          <button class="pill" type="button" data-title="The Matrix">The Matrix</button>
+          <button class="pill" type="button" data-title="Inception">Inception</button>
+          <button class="pill" type="button" data-title="Spirited Away">Spirited Away</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="status-bar" aria-live="polite">
+          <div>
+            <p class="status-label">Current query</p>
+            <h2 id="query-label">Waiting for input</h2>
+          </div>
+          <div class="status-metrics">
+            <div class="metric">
+              <span>Results</span>
+              <strong id="result-count">0</strong>
+            </div>
+            <div class="metric">
+              <span>State</span>
+              <strong id="result-state">Idle</strong>
+            </div>
+          </div>
+        </section>
+
+        <section id="feedback" class="feedback" hidden></section>
+
+        <section id="results" class="results-grid" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <template id="movie-card-template">
+      <article class="movie-card">
+        <div class="card-topline">
+          <span class="rank-badge"></span>
+          <div class="score-panel">
+            <span class="score-label">Final Score</span>
+            <strong class="score-chip"></strong>
+          </div>
+        </div>
+        <h3 class="movie-title"></h3>
+        <div class="genre-list"></div>
+        <dl class="stats-list">
+          <div>
+            <dt>Similarity</dt>
+            <dd class="similarity-value"></dd>
+          </div>
+          <div>
+            <dt>Rating</dt>
+            <dd class="rating-value"></dd>
+          </div>
+          <div>
+            <dt>Votes</dt>
+            <dd class="count-value"></dd>
+          </div>
+          <div>
+            <dt>Popularity</dt>
+            <dd class="popularity-value"></dd>
+          </div>
+        </dl>
+      </article>
+    </template>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
